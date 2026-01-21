@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+}
+
+stages {
+    stage('Build Docker Image') {
+        steps {
+            bat '%DOCKER% build -t python-app .'
+        }
+    }
+
+    stage('Run Tests Inside Docker'){
+        steps {
+            bat '%DOCKER% run python-app pytest
+        }
+    }
+
+    stage('Run Application'){
+        steps {
+            bat '%DOCKER% run python-app'
+            }
+        }
+    }
+}
